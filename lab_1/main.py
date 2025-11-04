@@ -14,6 +14,7 @@ def jor_method(A: np.ndarray, b: np.ndarray, x_0: np.ndarray, omega: float, itma
     n_row, n_col = A.shape
 
     k_f = 0
+    converged = False
     errors = []
 
     x_k = x_0.copy()
@@ -21,10 +22,11 @@ def jor_method(A: np.ndarray, b: np.ndarray, x_0: np.ndarray, omega: float, itma
 
     while True:
         # compute x_k
+        x_new = np.zeros_like(x_k)
         for i in range (n_row):
-            l_u = np.sum([A[i][j] * x_k[j] for j in range(n_col) if i != j])
-            x_k[i] = omega / A[i][i] * (b[i] - l_u) + (1 - omega) * x_k[i]
-            # r_k[i] = b[i] - l_u
+            l_u = np.sum([A[i][j] * x_ant[j] for j in range(n_col) if i != j])
+            x_new[i] = omega / A[i][i] * (b[i] - l_u) + (1 - omega) * x_k[i]
+        x_k = x_new.copy()
 
         # compute correction/residual
         r_k = np.linalg.norm(b - A @ x_k)
@@ -38,12 +40,54 @@ def jor_method(A: np.ndarray, b: np.ndarray, x_0: np.ndarray, omega: float, itma
         errors.append((np.round(d_k, 4), np.round(r_k, 4)))
 
         if chosen_err_crit < tol or k_f >= itmax:
+            converged = True
             break
 
         k_f += 1
         x_ant = x_k.copy()
 
-    result = {'x': x_k, 'k_f': k_f, 'errors': errors}
+    result = {'x': x_k, 'k_f': k_f, 'converged': converged, 'errors': errors}
+
+    return result
+
+def gs_method(A: np.ndarray, b: np.ndarray, x_0: np.ndarray, omega: float, itmax: int, tol: float, opt: int = 0) -> dict:
+    n_row, n_col = A.shape
+
+    k_f = 0
+    converged = False
+    errors = []
+
+    x_k = x_0.copy()
+    x_ant = x_0.copy()
+
+    while True:
+        # compute x_k
+        x_new = np.zeros_like(x_k)
+        for i in range (n_row):
+            # singura schimbare fata de Jacobi e ca inlocuim x_ant cu x_k in suma
+            l_u = np.sum([A[i][j] * x_k[j] for j in range(n_col) if i != j])
+            x_new[i] = omega / A[i][i] * (b[i] - l_u) + (1 - omega) * x_k[i]
+        x_k = x_new.copy()
+
+        # compute correction/residual
+        r_k = np.linalg.norm(b - A @ x_k)
+        d_k = np.linalg.norm(x_k - x_ant)
+
+        if opt == 0:
+            chosen_err_crit = d_k 
+        else:
+            chosen_err_crit = r_k 
+
+        errors.append((np.round(d_k, 4), np.round(r_k, 4)))
+
+        if chosen_err_crit < tol or k_f >= itmax:
+            converged = True
+            break
+
+        k_f += 1
+        x_ant = x_k.copy()
+
+    result = {'x': x_k, 'k_f': k_f, 'converged': converged, 'errors': errors}
 
     return result
 
@@ -88,9 +132,29 @@ def main():
         omega = 0.91 
         x_0 = np.random.randn(n_col)
 
-        result = jor_method(A, b, x_0, omega, ITMAX, TOL, 0)
 
-        plot_errors(result['errors'], 'Jacobi Over-Relaxation', i, omega, test = False, save = True)
+        # jacobi method
+        omega = 1
+        result = jor_method(A, b, x_0, omega, ITMAX, TOL, 0)
+        plot_errors(result['errors'], 'Jacobi', i, omega, test = False, save = True)
+
+
+        # jor method
+        omega = 0.9
+        result = jor_method(A, b, x_0, omega, ITMAX, TOL, 0)
+        plot_errors(result['errors'], 'Jacobi Over-Relaxed', i, omega, test = False, save = True)
+
+
+        # gauss-seidel method
+        omega = 1
+        result = gs_method(A, b, x_0, omega, ITMAX, TOL, 0)
+        plot_errors(result['errors'], 'Gauss-Seidel', i, omega, test = False, save = True)
+
+
+        # sor method
+        omega = 0.5 
+        result = gs_method(A, b, x_0, omega, ITMAX, TOL, 0)
+        plot_errors(result['errors'], 'Successive Over-Relaxation', i, omega, test = False, save = True)
 
 if __name__ == "__main__":
     main()
