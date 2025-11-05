@@ -187,6 +187,7 @@ def plot_errors(errors, method: str, num_test: int, omega: float, test: bool = T
 
 
 
+
 def run_save_all_tests():
     for i, test in enumerate(tests, start = 1):
         A, b = test
@@ -230,10 +231,12 @@ def run_save_all_tests():
         result = ssor_method(A, b, x_0, omega, ITMAX, TOL, 0)
         plot_errors(result['errors'], 'Symmetric Successive Over-Relaxation', i, omega, test = False, save = True)
 
+    plt.close('all')
+
    
 
 def main():
-    # run_save_all_tests()
+    run_save_all_tests()
 
     # demo
     test_num = 3 
