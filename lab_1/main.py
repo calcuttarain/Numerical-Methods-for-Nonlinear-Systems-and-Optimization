@@ -142,7 +142,7 @@ def plot_errors(result: dict, method: str, num_test: int, test: bool = True, sav
     axs[1].set_yscale('log')
     axs[1].grid(True)
 
-    title = f"Test {num_test} for the {method_name} method, " + r"$\omega$" + f" = {omega}, "
+    title = f"Test {num_test} for the {method_name} method, " + r"$\omega$" + f" = {omega:.4f}, "
     if opt == 0:
         title += 'stop criterion: correction norm' 
     else:
