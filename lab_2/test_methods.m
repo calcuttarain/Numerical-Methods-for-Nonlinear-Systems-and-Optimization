@@ -26,7 +26,8 @@ is_symmetric = true;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CGM %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-[~, kf_cgm, errors_cgm] = cgm(A, b, x_0, itmax, TOL);
+P_CGM = eye(n);
+[~, kf_cgm, errors_cgm] = pcgm(A, b, x_0, P_CGM, itmax, TOL);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PCGM %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -44,8 +45,8 @@ P_SSOR = M * (D \ M');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CGNR %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% is_symmetric = false;
-% [A, b, x_0] = generate_data(n, kappa, is_symmetric);
+is_symmetric = false;
+[A, b, x_0] = generate_data(n, kappa, is_symmetric);
 
 A = A(1:n - 100, :);
 b = b(1:n - 100);
