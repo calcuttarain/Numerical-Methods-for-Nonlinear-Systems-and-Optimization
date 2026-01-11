@@ -1,6 +1,8 @@
-function [x, idx, errors] = solver_7(h, b, x, method, itmax, TOL, omega)
+function [x, idx, errors] = solver_7(b, x, method, itmax, TOL, omega)
     N = length(x);
     n = sqrt(N);
+
+    h = 1 / (n + 1);
 
     center = 4 / h^2 + 1;
     neighbor = -1 / h^2;
