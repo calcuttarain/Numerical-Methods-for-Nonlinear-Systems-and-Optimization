@@ -1,7 +1,5 @@
 % 6 
 
-% Observatie: matricile A, P_j si P_column_norm nu trebuie stocate in memorie. 
-% In loc de inmultirea matricii A cu vector, se poate folosi convolutie pe gridul U, intrucat Laplacianul e media vecinilor.
 clc; clear;
 addpath('utils', 'methods');
 
@@ -55,7 +53,6 @@ for i = 1:length(n_arr)
         params = l_m_arr(:, col_idx);
         l1 = params(1); l2 = params(2);
         m1 = params(3); m2 = params(4);
-        labels = {};
         errors_arr = {};
 
         fprintf("\n--- l1 = %d, l2 = %d, m1 = %d, m2 = %d ---\n", l1, l2, m1, m2);

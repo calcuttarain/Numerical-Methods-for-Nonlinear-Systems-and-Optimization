@@ -47,23 +47,15 @@ for i = 1:length(n_arr)
 
         u_exact_sol = u_ex(x, l, m);
 
-        % cgm
-        [u_cgm, kf_cgm, errors_cgm] = cgm(A_h, f_h, u_h_0, itmax, TOL);
-
-        fprintf("%-100s -> %4d iterations | Error (L_2): %.2e\n", "CGM Convergence", kf_cgm, norm(u_exact_sol - u_cgm, 2));
-        labels{end+1} = "CGM"; 
-        errors_arr{end+1} = errors_cgm;
-
-        % pcgm
         for j = 1:size(precs, 1)
             P = precs{j, 1}; 
             name_p = precs{j, 2};
 
-            [u_pcgm, kf_pcgm, errors_pcgm] = pcgm(A_h, f_h, u_h_0, P, itmax, TOL);
+            [u, kf, errors] = pcgm(A_h, f_h, u_h_0, P, itmax, TOL);
 
-            fprintf("PCGM with %-90s -> %4d iterations | Error (L_2): %.4e\n", name_p, kf_pcgm, norm(u_exact_sol - u_pcgm, 2));
-            labels{end+1} = "PCGM with " + name_p;
-            errors_arr{end+1} = errors_pcgm;
+            fprintf("%-90s -> %4d iterations | Error (L_2): %.4e\n", name_p, kf, norm(u_exact_sol - u, 2));
+            labels{end+1} = name_p;
+            errors_arr{end+1} = errors;
         end
 
         plot_title = sprintf("Convergence results for N = %d, l = %d, m = %d", n, l, m);
@@ -76,15 +68,19 @@ end
 
 % preconditioners
 function precs = get_precs(A, omega)
+    n = size(A, 1);
+
     D = diag(diag(A));
     L = tril(A, -1);
     M = D + omega * L;
 
+    P_CGM = eye(n);
     P_J = D;
     P_col_norm = diag(sqrt(sum(A.^2, 1)));
     P_SSOR = M * (D \ M');
 
     precs = {
+        P_CGM,      "Conjugate Gradient";
         P_J,        "Jacobi Preconditioner";
         P_col_norm, "Column Norm Preconditioner";
         P_SSOR,     sprintf('Symmetric Successive Over-Relaxation (w=%.2f) Preconditioner', omega);
