@@ -65,7 +65,7 @@ for i = 1:length(n_arr)
         for j = 1:length(methods)
             method = methods(j);
 
-            [u, kf, errors] = solver_7(f_h, u_h_0, method, itmax, TOL, omega);
+            [u, kf, errors] = solver_7(h, f_h, u_h_0, method, itmax, TOL, omega);
 
             fprintf("%-90s -> %4d iterations | Error (L_2): %.4e\n", method, kf, norm(u_exact_sol - u, 2));
 
