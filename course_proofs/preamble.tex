@@ -1,0 +1,75 @@
+% preamble.tex
+\documentclass[12pt]{article}
+
+% packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{mathtools}
+\usepackage{mathrsfs}
+
+% shortcuts
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\M}{\mathscr{M}}
+\newcommand{\p}[1]{^{(#1)}}
+
+%%% metadata, header, title
+\makeatletter
+\newcommand{\course}[1]{\def\@course{#1}}
+\newcommand{\professor}[1]{\def\@professor{#1}}
+\newcommand{\student}[1]{\def\@student{#1}}
+\newcommand{\group}[1]{\def\@group{#1}}
+
+% header configuration
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\textbf{\@student}}
+\fancyhead[R]{\textbf{\@group}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% title configuration
+\renewcommand{\@maketitle}{
+    \newpage
+    \null
+    \vskip 2em
+    \begin{center}
+        {\LARGE \@title \par}
+        \vskip 1.5em
+        {\large \textit{\@course} \par}
+        \vskip 1em
+        {\large \textbf{\@professor} \par}
+        \vskip 1em
+        {\large \@date \par}
+    \end{center}
+    \par
+    \vskip 1.5em
+}
+\makeatother
+
+% environments
+\newenvironment{teorema}[2][Teorema]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\newenvironment{corolar}[2][Corolar]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2}]}{\end{trivlist}}
+
+\newenvironment{lema}[2][Lema]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2}]}{\end{trivlist}}
+
+\newenvironment{propozitie}[2][Propozitia]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2}]}{\end{trivlist}}
+
+\newenvironment{exercitiu}[2][Exercitiul]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2}]}{\end{trivlist}}
+
+\newenvironment{observatie}[1][Obs.]{\begin{trivlist}
+\item[\hskip \labelsep {\itshape #1}]}{\end{trivlist}}
+
+\newenvironment{demonstratie}[1][Dem]{\par\noindent\textbf{#1.} }{\hfill$\square$\par}
+
+\renewenvironment{proof}[1][Dem.]{\par\noindent\textbf{#1.} }{\hfill$\square$\par}

@@ -1,0 +1,197 @@
+% lecture_2.tex
+
+\section*{Cursul II}
+
+\begin{exercitiu}{1}
+    Să se dezvolte algoritmul \textbf{GSb}. 
+\end{exercitiu}
+
+\begin{demonstratie}
+    Pentru metoda \textbf{GSb} avem:
+    $$
+    P_{GSb} = D + U.
+    $$
+
+    Această matrice este \textbf{inversabilă} dacă și numai dacă:
+    $$
+    \det(D + U) \neq 0
+    \quad \Longleftrightarrow \quad
+    \prod_{i=1}^{n} a_{ii} \neq 0
+    \quad \Longleftrightarrow \quad
+    a_{ii} \neq 0, \ \forall i = 1, \dots, n.
+    $$
+
+    \vspace{1em}
+    Ecuația $i$ pentru metoda \textbf{GSb} este:
+    $$
+    a_{i1}x_1\p{k-1} + a_{i2}x_2\p{k-1} + \dots + a_{ii}x_i\p{k} + \dots + a_{in}x_n\p{k} = b_i.
+    $$
+
+    De aici rezultă:
+    \begin{equation}
+    x_i\p{k} = \frac{1}{a_{ii}} 
+    \left[
+    b_i - 
+    \sum_{j=1}^{i-1} a_{ij} x_j\p{k-1} -
+    \sum_{j=i+1}^{n} a_{ij} x_j\p{k}
+    \right].
+    \label{eq:gsb}
+    \end{equation}
+
+    Ca algoritm, se parcurge sistemul de la \textbf{ultima} ecuație ($i = n$) până la \textbf{prima} ($i = 1$) și se calculează fiecare $x_i$ cu formula \eqref{eq:gsb}.
+\end{demonstratie}
+
+\vspace{2em}
+\begin{teorema}{1}
+    \text{ }\\[0.5em]
+    Dacă $A \in \M_n(\R)$ este \textbf{strict diagonal dominantă}, atunci metoda \textbf{GSb} converge.
+\end{teorema}
+
+\begin{demonstratie} 
+    \begin{observatie}
+    Deoarece $M_{GSb}(A) = M_{GS}(A^{\mathsf T})$, rezultă că metoda \textbf{Gauss-Seidel descendentă} aplicată lui $A$ este echivalentă cu metoda \textbf{Gauss-Seidel ascendentă} aplicată lui $A^{\mathsf T}$.
+    $$
+    \Rightarrow\ \text{Se poate folosi demonstrația din curs pentru metoda GSa aplicată lui } A^{\mathsf T}.
+    $$
+    \end{observatie}
+\end{demonstratie}
+
+\begin{teorema}{2}
+    \text{ }\\[0.5em]
+    Dacă $A \in \M_n(\R)$ este \textbf{SPD}, atunci metoda \textbf{GSb} converge.
+\end{teorema}
+
+\begin{demonstratie} 
+    \begin{observatie} În mod similar cu exercițiul anterior, $M_{GSb}(A) = M_{GS}(A^{\mathsf T})$, rezultă că metoda \textbf{Gauss-Seidel descendentă} aplicată lui $A$ este echivalentă cu metoda \textbf{Gauss-Seidel ascendentă} aplicată lui $A^{\mathsf T}$.
+    $$
+    \Rightarrow\ \text{Se poate folosi demonstrația din curs pentru metoda GSa aplicată lui } A^{\mathsf T}.
+    $$
+    \end{observatie}
+\end{demonstratie}
+
+\begin{teorema}{1 Kahan}
+    \text{ }\\[0.5em]
+    Pentru orice $\omega \in \R$, se are $\rho(M_{SORb}(\omega)) \geq |\omega - 1|$.
+\end{teorema}
+
+\begin{demonstratie} 
+    Observăm că $M_{\mathrm{SORb}}(A,\omega)=M_{\mathrm{SOR}}(A^{\mathsf T},\omega)$ și $\rho(M)=\rho(M^{\mathsf T})$. Aplicând teorema lui Kahan pentru $M_{\mathrm{SOR}}(A^{\mathsf T},\omega)$, obţinem afirmaţia.
+\end{demonstratie}
+
+\begin{corolar}
+    Metoda \textbf{SORb} nu converge pentru $\omega \in \R \setminus (0,2)$.
+\end{corolar}
+
+\begin{demonstratie} 
+    Din teoremă, $\rho(M_{\mathrm{SORb}})\ge |1-\omega|\ge 1$ când $\omega\notin(0,2)$.
+\end{demonstratie}
+
+\begin{teorema}{2 Ostrowski-Reich}
+    \text{ }\\[0.5em]
+    Dacă $A \in \M_n(\R)$ este \textbf{SPD}, atunci metoda \textbf{SORb} converge $\Leftrightarrow \omega \in (0,2)$.
+\end{teorema}
+
+\begin{demonstratie} 
+    \begin{observatie}
+        Fiindcă $P_{\mathrm{SOR}}(A^{\mathsf T},\omega)=P_{\mathrm{SORb}}(A,\omega)$ și 
+        $N_{\mathrm{SOR}}(A^{\mathsf T},\omega)=N_{\mathrm{SORb}}(A,\omega)$, rezultă
+        $M_{\mathrm{SOR}}(A^{\mathsf T},\omega)=M_{\mathrm{SORb}}(A,\omega)$.
+    \end{observatie}
+    Prin urmare, demonstrația din curs pentru \textbf{SOR} aplicată lui $A^{\mathsf T}$ e identică la \textbf{SORb} aplicată lui $A$. 
+\end{demonstratie}
+
+\begin{teorema}{1}
+    \text{ }\\[0.5em]
+    (i) Dacă $A$ este simetrică $\Rightarrow$ matricile $P_{SSOR}(\omega)$ și $N_{SSOR}(\omega)$ sunt simetrice.\\[0.5em]
+    (ii) Dacă $A$ este simetrică și $D$ pozitiv definită $\Rightarrow$ $M_{SSOR}(\omega)$ are valori proprii reale nenegative.\\[0.5em]
+    (iii) Dacă $A$ este simetrică și $D$ pozitiv definită $\Rightarrow$ $\big[P_{SSOR}(\omega) + P_{SSOR}(\omega)^T - A\big]$ este SPD $\Leftrightarrow \omega \in (0,2)$.
+\end{teorema}
+
+\begin{demonstratie} 
+    $A=D+L+U$, $D^{\mathsf T}=D$, $U=L^{\mathsf T}$ (deoarece $A$ este simetrică). Rezultă că:
+    \begin{gather*}
+        P_{SSOR}(\omega)=\frac{1}{\omega(2-\omega)}(D+\omega L)\,D^{-1}\,(D+\omega L)^{\mathsf T},
+        N_{SSOR}(\omega)=\frac{1}{\omega(2-\omega)}\big((1-\omega)D-\omega L\big)\,D^{-1}\,\big((1-\omega)D-\omega L\big)^{\mathsf T}.
+    \end{gather*}
+    \noindent \textbf{(i)} \\
+    Fiecare matrice este de forma $X\,D^{-1}X^{\mathsf T}$ $\Rightarrow$ matricile $P_{SSOR}(\omega)$ și $N_{SSOR}(\omega)$ sunt simetrice.
+
+    \noindent \textbf{(ii)} 
+    $$
+    M_{SSOR}(\omega) = (D + \omega U)^{-1} D (D + \omega L)^{-1} \big[ (1 - \omega) D - \omega L \big] D^{-1} \big[ (1 - \omega) D - \omega U \big].
+    $$
+    $A = D + L + U$ este simetrică $\Rightarrow$ $U = L^{\mathsf T}$ și $D = D^{\mathsf T}$.  
+    Notăm:
+    $$
+    X := (D + \omega L)^{-1} \big[ (1 - \omega) D - \omega L \big] D^{-1/2}.
+    $$
+    Atunci:
+    $$
+    M_{SSOR}(\omega) = D^{-1/2} X^{\mathsf T} X D^{1/2}.
+    $$
+
+    Matricea $X^{T}X$ este simetrică și semipozitiv definită, deci valorile proprii ale ei sunt reale și nenegative.
+
+    Deoarece $M_{\text{SSOR}}$ este similară cu $X^{T}X$ (deoarece $D^{1/2}$ este inversabilă, iar $D^{1/2}M_{\text{SSOR}}D^{-1/2}=X^{T}X$) $\Rightarrow$ $M_{\text{SSOR}}$ are aceleași valori proprii ca $X^{T}X$, deci reale și nenegative.
+
+    \noindent \textbf{(iii)} 
+
+    \begin{align*}
+        P_{SSOR}(\omega) &=\frac{1}{\omega(2-\omega)}(D+\omega L)\,D^{-1}(D+\omega U),\\[0.4em]
+        P_{SSOR}(\omega)^{\mathsf T} &=\frac{1}{\omega(2-\omega)}(D+\omega U)\,D^{-1}(D+\omega L),\\[0.6em]
+        P_{SSOR}(\omega)+P_{SSOR}(\omega)^{\mathsf T} &=\frac{1}{\omega(2-\omega)}\Big[(D+\omega L)D^{-1}(D+\omega U) +(D+\omega U)D^{-1}(D+\omega L)\Big],\\[0.6em]
+        &=\frac{1}{\omega(2-\omega)} \Big[(D+\omega L)(I+\omega D^{-1}U) +(D+\omega U)(I+\omega D^{-1}L)\Big],\\[0.6em]
+        &=\frac{1}{\omega(2-\omega)} \Big[\,2D+2\omega(L+U)+\omega^2\!\big(LD^{-1}U+UD^{-1}L\big)\Big].
+    \end{align*}
+
+    \begin{align*}
+        P_{SSOR}(\omega)+P_{SSOR}(\omega)^{\mathsf T}-A
+        &=\frac{1}{\omega(2-\omega)}
+        \Big[\,2D+2\omega(L+U)+\omega^2(LD^{-1}U+UD^{-1}L)\\[-0.2em]
+        &\hspace{8.7em}-\omega(2-\omega)D-\omega(2-\omega)(L+U)\Big]
+    \end{align*}
+
+    \begin{align*}
+        &=\frac{1}{\omega(2-\omega)}
+        \Big[(2-\omega(2-\omega))D
+        +(2\omega-\omega(2-\omega))(L+U)
+        +\omega^2\!\big(LD^{-1}U+UD^{-1}L\big)\Big].
+    \end{align*}
+
+    Folosind $U=L^{\mathsf T}$ și identitatea
+    $$
+    LD^{-1}U+UD^{-1}L=(L+U)-D,
+    $$
+    obținem:
+    \begin{align*}
+        P_{SSOR}(\omega)+P_{SSOR}(\omega)^{\mathsf T}-A &= \frac{1}{\omega(2-\omega)} \Big[(2-2\omega+\omega^2)D+\omega^2\big((L+U)-D\big)+\omega^2(L+U)\Big]\\[0.3em]
+        &=\frac{1}{\omega(2-\omega)}\Big[(2-2\omega)D\Big] = \frac{2-\omega}{\omega}\,D.
+    \end{align*}
+
+    $$
+    \boxed{P_{SSOR}(\omega) + P_{SSOR}(\omega)^{\mathsf T} - A = \dfrac{2 - \omega}{\omega}\,D.}
+    $$
+
+    Cum $D$ este PD, rezultă că termenul din stânga este SPD ddacă $\dfrac{2-\omega}{\omega}>0$, adică \,$\omega\in(0,2)$.
+\end{demonstratie}
+
+\begin{teorema}{2 Ostrowski-Reich}
+    \text{ }\\[0.5em]
+    Dacă $A \in \M_n(\R)$ este \textbf{SPD}, atunci metoda \textbf{SSOR} converge $\Leftrightarrow \omega \in (0,2)$.
+\end{teorema}
+
+\begin{demonstratie} 
+    Dacă SSOR converge, atunci $\rho(M_{SSOR})<1$.
+    Prin criteriul \emph{Householder-John}:
+    $$
+    P_{SSOR}(\omega)+P_{SSOR}(\omega)^{\mathsf T}-A\ \text{este SPD}.
+    $$
+    Din demonstrația anterioară,
+    $$
+    P_{SSOR}+P_{SSOR}^{\mathsf T}-A=\frac{2-\omega}{\omega}\,D,
+    $$
+    iar $D$ este PD (deoarece $A$ este SPD). Așadar $(2-\omega)/\omega>0$, adică $\omega\in(0,2)$.
+
+    Dacă $\omega\in(0,2)$, atunci $\dfrac{2-\omega}{\omega}\,D$ este SPD, deci $P_{SSOR}+P_{SSOR}^{\mathsf T}-A$ este SPD. Aplicând criteriul \emph{Householder-John} $\Rightarrow$ $\rho(M_{SSOR})<1$ $\Rightarrow$ metoda SSOR converge.
+
+\end{demonstratie}

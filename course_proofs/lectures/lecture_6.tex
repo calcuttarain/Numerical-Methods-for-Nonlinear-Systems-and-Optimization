@@ -1,0 +1,261 @@
+% lecture_6.tex
+
+\section*{Cursul VI}
+
+\begin{propozitie}{2 (CGM - metoda directa)}
+    \text{ }\\[0.5em]
+    Fie $A \in \M_n(\R)$ SPD si $u\p{i} \in \R^n, i=\overline{1,n}$, vectorii proprii ai lui $A$.
+    Daca $b = \sum_{l=1}^k \gamma_l u\p{i_l} \in \R^n$, atunci algoritmul CGM pentru $Ax=b$, cu punctul de start $x\p{0} = 0 \in \R^n$, produce solutia exacta $x^* \coloneqq A^{-1}b$ in cel mult $k$ iteratii.
+\end{propozitie}
+
+\begin{demonstratie}
+    Conform Teoremei Spectrale, $ A u\p{i} = \lambda_i u\p{i} \implies A^{-1} u\p{i} = \frac{1}{\lambda_i} u\p{i}$. Atunci:
+    \begin{align*}
+        x^{*} &= A^{-1} b \\
+        &= A^{-1} \sum_{l=1}^k \gamma_l u\p{i_l} \\
+        &= \sum_{l=1}^k \frac{\gamma_l}{\lambda_{i_l}} u\p{i_l},
+    \end{align*}
+    iar
+    $$
+    x\p{0} - x^{*} = - \sum_{l=1}^k \frac{\gamma_l}{\lambda_{i_l}} u\p{i_l}.
+    $$
+
+    \bigskip
+
+    Se considera polinomul $ p(\lambda) $ cu radacinile $ \lambda_{i_l} $, pentru care $ p(0) = 1 $, definit prin:
+    $$
+    p(\lambda) = \prod_{j=1}^{k} \left( 1 - \frac{\lambda}{\lambda_{i_j}} \right).
+    $$
+
+    Atunci:
+    \begin{align*}
+        p(A)(x\p{0} - x^{*}) &= p(A) (- \sum_{l=1}^k \frac{\gamma_l}{\lambda_{i_l}} u\p{i_l}) \\
+        &= - \sum_{l=1}^k \frac{\gamma_l}{\lambda_{i_l}} p(A) u\p{i_l} \\
+        &= - \sum_{l=1}^k \frac{\gamma_l}{\lambda_{i_l}} p(\lambda_{i_l}) u\p{i_l} \\
+        &= 0,
+    \end{align*}
+    conform constructiei polinomului $ p(\lambda) $.
+
+    Intrucat exista un polinom $ p \in P_k$ cu $p(0) = 1 $ astfel incat $ p(A)(x\p{0} - x^{*}) = 0 $, iar minimizeaza $\|x\p{k} - x^*\|_A = \min\limits_{p \in P_k : p(0)=1} \|p(A)(x\p{0} - x^*)\|_A = 0 \implies x\p{k} = x^{*} $, ceea ce inseamna CGM produce solutia exacta in cel mult $ k $ iteratii.
+
+\end{demonstratie}
+
+\begin{propozitie}{1 (CGM - metoda directa)}
+    \text{ }\\[0.5em]
+    Fie $A \in \M_n(\R)$ o matrice simetrica si pozitiv definita (SPD) si $b \in \R^n$. 
+    Atunci algoritmul CGM produce solutia sistemului $Ax=b$ in maximum $n$ iteratii, cu aritmetica exacta (i.e., fara erori de rotunjire).
+\end{propozitie}
+
+\begin{demonstratie}
+    Conform Propozitiei 2, pentru $ b $ o combinatie liniara dintre cei $ n $ vectorii proprii ai lui $ A $, $ x\p{n} = x^{*} $, iar CGM produce solutia exacta in cel mult $ n $ pasi.
+
+    Alternativ, se poate demonstra convergenta in $ n $ iteratii alegand polinomul caracteristic al matricii $ A $ care, conform Teoremei Cayley-Hamilton, isi satisface propriul polinom caracteristic.
+\end{demonstratie}
+
+\begin{propozitie}{3 (CGM - metoda directa)}
+    \text{ }\\[0.5em]
+    Fie $A \in \M_n(\R)$ SPD care are $k \le n$ valori proprii distincte si $b \in \R^n$.
+    Atunci CGM produce solutia sistemului $Ax=b$ in cel mult $k$ iteratii, in aritmetica exacta.
+\end{propozitie}
+
+\begin{demonstratie}
+    Conform Propozitiei 2, reiese din alegerea polinomului $ p(A) $ ca pentru $ b $ o combinatie liniara dintre cei $ k $ vectorii proprii distincti ai lui $ A $, $ x\p{k} = x^{*} $, iar CGM produce solutia exacta in cel mult $ k $ pasi.
+\end{demonstratie}
+
+\begin{propozitie}{4 (CGM - metoda directa)}
+    \text{ }\\[0.5em]
+    Fie $A = I_n + B \in \M_n(\R)$ SPD, unde $\text{rang}(B) = k$ si $b \in \R^n$.
+    Atunci CGM produce solutia sistemului $Ax=b$ in cel mult $k+1$ iteratii, in aritmetica exacta.
+\end{propozitie}
+
+\begin{demonstratie}
+    Intrucat $ \text{rang}(B) = k = \text{dim}(B) $, inseamna ca $ B $ poate avea cel mult $k$ valori proprii nenule, ceea ce inseamna ca poate avea cel mult $ k + 1 $ valori proprii distincte.
+
+    \smallskip
+
+    Consideram $\lambda \in \sigma(A)$ si $ \mu \in \sigma(B)$ si $ v_i$, $ i \in \{ 1, \dots, n\}$ vectorii proprii asociati matricii $ A $. Atunci:
+    \begin{align*}
+        A v &= (I_n + B) v \\
+        &= I_n v + B v \\
+        &= v + \mu v \\
+        &= (1 + \mu) v,
+    \end{align*}
+    ceea ce inseamna ca:
+    $$
+    \lambda_i = 1 + \mu_i, \forall i \in \{1, \dots, n \}.
+    $$
+
+    Pentru $ \mu_i = 0 $, $ \lambda_i = 1 \implies $ matricea $ A $ are cel mult $ k + 1 $ valori proprii distincte. Conform Propozitiei 3, CGM produce solutia exacta in cel mult $ k + 1 $ pasi.
+
+\end{demonstratie}
+
+\newpage
+
+\begin{observatie}{I}
+
+    Se considera sistemul $\tilde{A} \tilde{x} = \tilde{b}$ unde:
+    \begin{align*}
+        \tilde{A} &:= P^{-1/2} A P^{-1/2} \quad (\text{SPD}) \\
+        \tilde{x} &:= P^{1/2} x \\
+        \tilde{b} &:= P^{-1/2} b \in \R^n
+    \end{align*}
+    Atunci au loc urmatoarele:
+    \begin{enumerate}
+        \item[(1)] Matricea $\tilde{A}$ este SPD in raport cu $\langle \cdot, \cdot \rangle_2$.
+        \item[(2)] Prin aplicarea CGM sistemului preconditionat, cu substitutiile corespunzatoare, se obtine acelasi algoritm PCGM.
+    \end{enumerate}
+
+\end{observatie}
+
+\begin{demonstratie}
+
+    \noindent (1)
+
+    $\tilde{A}^{T} = (P^{-1/2} A P^{-1/2})^T = (P^{-1/2})^{T} A^{T} (P^{-1/2})^{T} = P^{-1/2} A P^{-1/2} = \tilde{A} $, deoarece $ A $ si $ P $ sunt simetrice.
+
+    \smallskip
+
+    Fie $x \in \R^n, x \neq 0$. Atunci:
+    \begin{align*}
+        x^T \tilde{A} x &= x^T (P^{-1/2} A P^{-1/2}) x \\
+        &= (P^{-1/2} x)^T A (P^{-1/2} x)
+    \end{align*}
+
+    Fie $y = P^{-1/2} x$. Intrucat $P^{-1/2}$ este nesingulara si $x \neq 0 \implies y \neq 0$. Deoarece $A$ este pozitiv definita, $y^T A y > 0, \forall y \neq 0$.
+    $$ \implies x^T \tilde{A} x > 0 $$
+
+    In consecinta, $ \tilde{A} $ este SPD.
+
+    \bigskip
+
+    \noindent (2)
+
+    Fie $ \tilde{r} = P^{-1/2}r$ si $ \tilde{p} = P^{1/2}p $, reziduul si directia in sistemul preconditionat. 
+    \begin{observatie}
+    $$ z = P^{-1}r = P^{-1/2}(P^{-1/2}r) = P^{-1/2}\tilde{r} \implies \tilde{r} = P^{1/2}z. $$
+    \end{observatie}
+
+    \medskip
+
+    \textbf{I. $\alpha_k$} \\
+    $$ \tilde{\alpha_k} = \frac{(\tilde{r}\p{k})^T \tilde{r}\p{k}}{(\tilde{p}\p{k})^T \tilde{A} \tilde{p}\p{k}} $$
+    Numaratorul:
+    $$ (\tilde{r}\p{k})^T \tilde{r}\p{k} = (P^{-1/2}r\p{k})^T (P^{-1/2}r\p{k}) = (r\p{k})^T P^{-1} r\p{k} = (r\p{k})^T z\p{k}. $$
+    Numitorul:
+    $$ (\tilde{p}\p{k})^T \tilde{A} \tilde{p}\p{k} = (P^{1/2}p\p{k})^T (P^{-1/2} A P^{-1/2}) (P^{1/2}p\p{k}) = (p\p{k})^T A p\p{k}. $$
+    Deci $\displaystyle \tilde{\alpha_k} = \frac{(r\p{k})^T z\p{k}}{(p\p{k})^T A p\p{k}} = \alpha_k $.
+
+    \bigskip
+
+    \textbf{II. $x\p{k + 1}$} \\
+    $$ 
+    \tilde{x}\p{k+1} = \tilde{x}\p{k} + \alpha_k \tilde{p}\p{k}
+    $$
+    $$
+    P^{-1/2}\tilde{x}\p{k+1} = P^{-1/2}\tilde{x}\p{k} + \alpha_k P^{-1/2}\tilde{p}\p{k} 
+    $$
+    Deci $ \tilde{x}\p{k+1} = x\p{k} + \alpha_k p\p{k} = x\p{k + 1}$.
+
+    \bigskip
+
+    \textbf{III. $r\p{k + 1}$} \\
+    $$ \tilde{r}\p{k+1} = \tilde{r}\p{k} - \alpha_k \tilde{A} \tilde{p}\p{k} $$
+    $$ P^{1/2}\tilde{r}\p{k+1} = P^{1/2}\tilde{r}\p{k} - \alpha_k P^{1/2}(P^{-1/2} A P^{-1/2}) P^{1/2} p\p{k} $$
+    Deci $ \tilde{r}\p{k+1} = r\p{k} - \alpha_k A p\p{k} = r\p{k + 1}$.
+
+    \bigskip
+
+    \textbf{IV. $\beta_k$} \\
+    $$ \tilde{\beta}_k = \frac{(\tilde{r}\p{k+1})^T \tilde{r}\p{k+1}}{(\tilde{r}\p{k})^T \tilde{r}\p{k}} = \frac{(r\p{k+1})^T z\p{k+1}}{(r\p{k})^T z\p{k}} = \beta_k$$
+
+    \textbf{V: $p\p{k}$} \\
+    $$ \tilde{p}\p{k+1} = \tilde{r}\p{k+1} + \beta_k \tilde{p}\p{k} $$
+    $$ P^{-1/2}\tilde{p}\p{k+1} = P^{-1/2}\tilde{r}\p{k+1} + \beta_k P^{-1/2}\tilde{p}\p{k} $$
+    Deci $ \tilde{p}\p{k+1} = z\p{k+1} + \beta_k p\p{k} = p\p{k + 1}. $
+
+\end{demonstratie}
+
+\begin{observatie}{II}
+
+    Se considera sistemul $ \hat{A} \hat{x} = \hat{b} $ unde:
+    \begin{align*}
+        \hat{A} &:= H^{-1} A H^{-T} \quad (\text{SPD}) \\
+        \hat{x} &:= H^T x \\
+        \hat{b} &:= H^{-1} b \in \R^n
+    \end{align*}
+
+    Atunci au loc urmatoarele:
+    \begin{enumerate}
+        \item[(1)] Matricea $\hat{A}$ este SPD in raport cu $\langle \cdot, \cdot \rangle_2$.
+        \item[(2)] Prin aplicarea CGM sistemului preconditionat, cu substitutiile corespunzatoare, se obtine acelasi algoritm PCGM.
+    \end{enumerate}
+
+\end{observatie}
+
+\newpage
+
+\begin{demonstratie}
+
+    \medskip
+
+    \noindent{(1)}
+
+    $ \hat{A}^{T} = (H^{-1} A H^{-T})^{T} = (H^{-T})^{T} A^{T} H^{-T} = H^{-1} A H^{-T} = \hat{A}$, deoarece $ A $ este simetrica.
+
+    Fie $x \in \R^n, x \neq 0$. Atunci:
+    \begin{align*}
+        x^T \hat{A} x &= x^T (H^{-1} A H^{-T}) x \\
+        &= (H^{-T} x)^T A (H^{-T} x).
+    \end{align*}
+
+    Fie $y = H^{-T} x$. Intrucat $ P $ este SPD, inseamna ca $\text{det}(P) > 0$, iar $ \text{det}(P) = \text{det}(H H^{T}) = \text{det}(H)^2$. Intrucat patratul lui $ \text{det}(H)$ e un numar strict pozitiv, $ \text{det}(H)$ nu poate fi 0, de unde rezulta nesingularitatea lui $ H $. $ A $ este SPD, deci $y^T A y > 0, \forall x \neq 0$.
+
+    In consecinta,  $ \tilde{A} $ este SPD.
+
+    \bigskip
+
+    \noindent{(2)}
+
+    Fie:
+    \begin{align*}
+        \hat{r}\p{k} &= H^{-1} r\p{k} \quad (\hat{b} - \hat{A}\hat{x}\p{k} = H^{-1}(b - Ax\p{k})) \\
+        z\p{k} &= H^{-T} \hat{r}\p{k} \quad (z = P^{-1}r = (HH^T)^{-1}r = H^{-T}(H^{-1}r)) \\
+        \hat{p}\p{k} &= H^T p\p{k}.
+    \end{align*}
+
+    \textbf{I. $\alpha_k$} \\
+    $$ \hat{\alpha}_k = \frac{(\hat{r}\p{k})^T \hat{r}\p{k}}{(\hat{p}\p{k})^T \hat{A} \hat{p}\p{k}} $$
+    Numaratorul:
+    $$ (\hat{r}\p{k})^T \hat{r}\p{k} = (H^{-1}r\p{k})^T (H^{-1}r\p{k}) = (r\p{k})^T H^{-T} H^{-1} r\p{k} = (r\p{k})^T z\p{k}. $$
+    Numitorul:
+    $$ (\hat{p}\p{k})^T \hat{A} \hat{p}\p{k} = (H^T p\p{k})^T (H^{-1} A H^{-T}) (H^T p\p{k}) = (p\p{k})^T A p\p{k}. $$
+    Deci $\displaystyle \hat{\alpha}_k = \frac{(r\p{k})^T z\p{k}}{(p\p{k})^T A p\p{k}} = \alpha_k $.
+
+    \bigskip
+
+    \textbf{II. $x\p{k + 1}$} \\
+    $$ \hat{x}\p{k+1} = \hat{x}\p{k} + \alpha_k \hat{p}\p{k} $$
+    $$ H^{-T}\hat{x}\p{k+1} = H^{-T}\hat{x}\p{k} + \alpha_k H^{-T}\hat{p}\p{k} $$
+    Deci $ \hat{x}\p{k+1} = x\p{k} + \alpha_k p\p{k} = x\p{k + 1}$.
+
+    \bigskip
+
+    \textbf{III. $r\p{k + 1}$} \\
+    $$ \hat{r}\p{k+1} = \hat{r}\p{k} - \alpha_k \hat{A} \hat{p}\p{k} $$
+    $$ H\hat{r}\p{k+1} = H\hat{r}\p{k} - \alpha_k H(H^{-1} A H^{-T}) H^T p\p{k} $$
+    Deci $ \hat{r}\p{k+1} = r\p{k} - \alpha_k A p\p{k} = r\p{k + 1}$.
+
+    \bigskip
+
+    \textbf{IV. $\beta_k$} \\
+    $$ \hat{\beta}_k = \frac{(\hat{r}\p{k+1})^T \hat{r}\p{k+1}}{(\hat{r}\p{k})^T \hat{r}\p{k}} = \frac{(r\p{k+1})^T z\p{k+1}}{(r\p{k})^T z\p{k}} = \beta_k$$
+
+    \bigskip
+
+    \textbf{V. $p\p{k+1}$} \\
+    $$ \hat{p}\p{k+1} = \hat{r}\p{k+1} + \beta_k \hat{p}\p{k} $$
+    Inmultim la stanga cu $H^{-T}$ (si folosim relatia $H^{-T}\hat{r} = z$):
+    $$ H^{-T}\hat{p}\p{k+1} = H^{-T}\hat{r}\p{k+1} + \beta_k H^{-T}\hat{p}\p{k} $$
+    Deci $ \hat{p}\p{k+1} = z\p{k+1} + \beta_k p\p{k} = p\p{k + 1}. $
+
+\end{demonstratie}

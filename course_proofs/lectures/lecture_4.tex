@@ -1,0 +1,75 @@
+% lecture_4.tex
+
+\section*{Cursul IV}
+
+\begin{teorema}[I. Lemă]{(Inegalitatea Kantorovich)}
+    \text{ }\\[0.5em]
+    Fie $A \in \M_n(\R)$ o matrice \textbf{SPD} și $0 < \lambda_1 \le \lambda_2 \le \dots \le \lambda_n$ valorile proprii ale lui $A$. \\
+    Se notează numărul de condiționare al lui A cu $K \coloneqq \text{cond}_2(A) = \|A\|_2 \|A^{-1}\|_2 = \frac{\lambda_n}{\lambda_1}$. Atunci:
+    $$
+    \frac{\|x\|_A \|x\|_{A^{-1}}}{\|x\|_2^2} \le \frac{1}{2} \left( \sqrt{K} + \frac{1}{\sqrt{K}} \right), \quad \forall x \in \R^n, x \neq 0 
+    $$
+
+\end{teorema}
+
+\begin{demonstratie}
+
+    Conform Teoremei Spectrale,
+    $$ 
+    \|x\|_A = \sqrt{x^T A x} = \sqrt{x^T Q \Lambda Q^T x} \quad \text{(*)}
+    $$ 
+
+    Considerăm $y = Q^T x$.
+    $$ 
+    \text{(*)} \Rightarrow y^T \Lambda y = \|y\|_\Lambda = \sqrt{\sum_{i=1}^n \lambda_i y_i^2}
+    $$
+
+    Analog, pentru $\|x\|_{A^{-1}} \text{, }  \|y\|_{\Lambda^{-1}} = \sqrt{\sum_{i=1}^n \frac{1}{\lambda_i} y_i^2}$.
+
+    \bigskip
+
+    \begin{observatie}
+        $(\lambda_n - \lambda_i)(\lambda_i - \lambda_1) \ge 0, (\forall) i \iff $
+        \begin{align*}
+            &\iff \lambda_n \lambda_i - \lambda_n \lambda_1 - \lambda_i^2 + \lambda_i \lambda_1 \ge 0 \\
+            &\iff \lambda_n \lambda_1 + \lambda_i^2 \le \lambda_n \lambda_i + \lambda_i \lambda_1 \\
+            &\iff \lambda_n \lambda_1 \cdot \frac{1}{\lambda_i} + \lambda_i \le \lambda_1 + \lambda_n
+        \end{align*}
+    \end{observatie}
+
+    Se înmulțește cu $y_i^2$ pentru $i = \overline{1, n}$:
+    \begin{align*}
+        &\iff \sum_{i=1}^n \lambda_n \lambda_1 \cdot \frac{1}{\lambda_i} \cdot y_i^2 + \sum_{i=1}^n \lambda_i \cdot y_i^2 \le \sum_{i=1}^n (\lambda_1 + \lambda_n) y_i^2 \\
+        &\iff \lambda_n \lambda_1 \sum_{i=1}^n \frac{1}{\lambda_i} y_i^2 + \sum_{i=1}^n \lambda_i y_i^2 \le (\lambda_1 + \lambda_n) \sum_{i=1}^n y_i^2 \\
+        &\iff \lambda_n \lambda_1 \|y\|^2_{\Lambda^{-1}} + \|y\|^2_\Lambda \le (\lambda_1 + \lambda_n) \|y\|^2_2
+    \end{align*}
+
+    \bigskip
+
+    Fie $a = \lambda_n \lambda_1 \|y\|^2_{\Lambda^{-1}}$, $b = \|y\|^2_\Lambda$. Conform inegalității $4 a b \le (a + b)^2$:
+    \begin{align*}
+        4 \lambda_n \lambda_1 \|y\|^2_{\Lambda^{-1}} \cdot \|y\|^2_\Lambda &\le \left( \lambda_n \lambda_1 \|y\|^2_{\Lambda^{-1}} + \|y\|^2_\Lambda \right)^2 \le \left[ (\lambda_1 + \lambda_n) \|y\|_2^2 \right]^2 \\
+        &\Rightarrow 4 \lambda_n \lambda_1 \|y\|^2_\Lambda \|y\|^2_{\Lambda^{-1}} \le \left[ (\lambda_1 + \lambda_n) \|y\|_2^2 \right]^2 \\
+        &\Rightarrow 2 \sqrt{\lambda_n \lambda_1} \|y\|_\Lambda \|y\|_{\Lambda^{-1}} \le (\lambda_1 + \lambda_n) \|y\|_2^2 \\
+        &\Rightarrow \frac{\|y\|_\Lambda \cdot \|y\|_{\Lambda^{-1}}}{\|y\|_2^2} \le \frac{\lambda_1 + \lambda_n}{2 \sqrt{\lambda_1 \lambda_n}} \quad \text{(1)}
+    \end{align*}
+
+    \bigskip
+
+    \begin{observatie}
+    \begin{align*}
+        &\frac{1}{2} \left( \sqrt{K} + \frac{1}{\sqrt{K}} \right) = \frac{K + 1}{2 \sqrt{K}} = \frac{\frac{\lambda_n}{\lambda_1} + 1}{2 \sqrt{\frac{\lambda_n}{\lambda_1}}} \\
+        &= \frac{\frac{\lambda_1 + \lambda_n}{\lambda_1}}{2 \sqrt{\lambda_n} \cdot \frac{1}{\sqrt{\lambda_1}}} = \frac{\frac{\lambda_1 + \lambda_n}{\lambda_1}}{2 \frac{\sqrt{\lambda_n}}{\sqrt{\lambda_1}}} \\
+        &= \frac{\lambda_1 + \lambda_n}{2 \sqrt{\lambda_n} \cdot \sqrt{\lambda_1}} = \frac{\lambda_1 + \lambda_n}{2 \sqrt{\lambda_1 \lambda_n}} \quad \text{(2)}
+    \end{align*}
+    \end{observatie}
+
+    Conform (1), (2):
+    \begin{align*}
+        &\frac{\|y\|_\Lambda \cdot \|y\|_{\Lambda^{-1}}}{\|y\|_2^2} \le \frac{1}{2} \left( \sqrt{K} + \frac{1}{\sqrt{K}} \right) \\
+        &\Rightarrow \frac{\|Q^T x\|_\Lambda \cdot \|Q^T x\|_{\Lambda^{-1}}}{\|Q^T x\|_2^2} \le \frac{1}{2} \left( \sqrt{K} + \frac{1}{\sqrt{K}} \right) \\
+        &\Rightarrow \frac{\|x\|_A \cdot \|x\|_{A^{-1}}}{\|x\|_2^2} \le \frac{1}{2} \left( \sqrt{K} + \frac{1}{\sqrt{K}} \right),
+    \end{align*}
+    deoarece norma euclidiană a unui vector este invariantă la transformări ortogonale. 
+
+\end{demonstratie}

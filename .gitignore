@@ -207,3 +207,49 @@ marimo/_lsp/
 __marimo__/
 
 .DS_Store
+
+## Core latex/pdflatex auxiliary files:
+*.aux
+*.lof
+*.log
+*.lot
+*.fls
+*.out
+*.toc
+*.fmt
+*.fot
+*.cb
+*.cb2
+.*.lb
+
+## Intermediate documents:
+*.dvi
+*.xdv
+*-converted-to.*
+
+## Bibliography auxiliary files (bibtex/biblatex/biber):
+*.bbl
+*.bcf
+*.blg
+*-blx.aux
+*-blx.bib
+*.run.xml
+
+## Synctex files 
+*.synctex
+*.synctex(busy)
+*.synctex.gz
+*.synctex.gz(busy)
+
+## Listing/Minted
+*.pyg
+_minted*
+
+## MetaPost/Asymptote:
+*.snm
+*.nav
+
+## Backup files:
+*.bak
+*.sav
+*.tmp

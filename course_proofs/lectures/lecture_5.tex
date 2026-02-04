@@ -1,0 +1,130 @@
+% lecture_5.tex
+
+\section*{Cursul V}
+
+\begin{teorema}{1 (proprietăți ale CGM)}
+    \text{ }\\[0.5em]
+    Fie algoritmul CGM (Conjugate Gradient Method). Atunci au loc următoarele proprietăți:
+
+    \begin{itemize}
+        \item[(i)] $r\p{k} = r\p{k-1} - \alpha_k A p\p{k}, \quad \forall k \ge 1$
+        \item[(ii)] $P_k^T r\p{k} \coloneqq \text{col} \left[ p\p{1}, p\p{2}, \dots, p\p{k} \right]^T r\p{k} = 0_k, \quad \forall k \ge 1$
+        \item[(iii)] $\text{span} \{ p\p{1}, p\p{2}, \dots, p\p{k} \} = \text{span} \{ r\p{0}, r\p{1}, \dots, r\p{k-1} \} = \mathcal{K}_k(r\p{0}, A), \quad \forall k \ge 1$
+        \item[(iv)] $(r\p{i})^T r\p{j} = 0, \quad \forall 0 \le i < j \le k, \forall k \ge 1$
+    \end{itemize}
+
+\end{teorema}
+
+\begin{demonstratie}
+
+    \bigskip
+
+    \noindent \textbf{i)}
+    \begin{align*}
+        r\p{k} &= b - A x\p{k} \\
+        &= b - A (x\p{k - 1} + \alpha_k p\p{k}) \\
+        &= (b - A x\p{k - 1}) - \alpha_k A p\p{k} \\
+        &= r\p{k - 1} - \alpha_k A p\p{k}
+    \end{align*}
+
+    \noindent \textbf{ii)}
+
+    Fie $ P(k) $ propoziția care afirmă că $ P_k^T r\p{k} = 0_k $.
+
+    \medskip
+
+    Pentru $ P(0) $ :
+    \begin{align*}
+        r\p{1} &= r\p{0} - \alpha_1 A p\p{1} \\
+        (p\p{1})^{\top} r\p{1} &= (p\p{1})^{\top} r\p{0} - \alpha_1 (p\p{1})^{\top} A p\p{1} \\
+        &= \langle (p\p{1}), r\p{0} \rangle_2 - \frac{\langle p\p{1}, r\p{0}\rangle_2}{\langle p\p{1}, p\p{1} \rangle_A} \langle p\p{1}, p\p{1} \rangle_A \\
+        &= 0
+    \end{align*}
+
+    Se consideră $ P(k) $ adevărată și se demonstrează că $ P(k) \implies P(k + 1) $:
+    \begin{align*}
+        r\p{k + 1} &= r\p{k} - \alpha_{k + 1} A p\p{k + 1} \\
+        P_{k+1}^{\top} r\p{k + 1} &= P_{k+1}^{\top} r\p{k} - \alpha_{k + 1} P_{k+1}^{\top} A p\p{k + 1} \\
+        &= \begin{bmatrix} P_k^T r\p{k} \\ (p\p{k+1})^T r\p{k} \end{bmatrix} - \alpha_{k + 1} \begin{bmatrix} P_k^T A p\p{k+1} \\ (p\p{k+1})^T A p\p{k+1} \end{bmatrix}\\
+    \end{align*}
+
+    Din ipoteza de inducție și proprietatea de $A$-ortogonalitate a direcțiilor, rezultă că:
+
+    \begin{equation*}
+        P_{k+1}^T r\p{k+1} = \begin{bmatrix} 0 \\ \vdots \\ 0 \\ (p\p{k+1})^T r\p{k} \end{bmatrix} - \alpha_{k+1} \begin{bmatrix} 0 \\ \vdots \\ 0 \\ (p\p{k+1})^T A p\p{k+1} \end{bmatrix}
+    \end{equation*}
+
+    \newpage
+
+    Pentru a ajunge la vectorul nul:
+    \begin{gather*}
+        \langle p\p{k+1}), r\p{k} \rangle_2 - \alpha_{k+1} \langle p\p{k+1}, p\p{k+1} \rangle_A \\
+        = \langle p\p{k+1}), r\p{k} \rangle_2 - \frac{\langle p\p{k+1}), r\p{k} \rangle_2}{\langle p\p{k+1}, p\p{k+1} \rangle_A} \langle p\p{k+1}, p\p{k+1} \rangle_A = 0 
+    \end{gather*}
+
+    \noindent \textbf{iii)}
+
+    Fie $ R\p{k} \coloneqq \text{span} \{ r\p{0}, r\p{1}, \dots, r\p{k-1} \} $ si $ P\p{k} \coloneqq \text{span} \{ p\p{1}, p\p{2}, \dots, p\p{k} \} $.  
+
+    \medskip
+
+    Fie $ P(k) $ propoziția care afirmă că $ P\p{k} = R\p{k} = \mathcal{K}_k(r\p{0}, A), \quad \forall k \ge 1$.
+
+    \medskip
+
+    Pentru P(1):
+
+    \begin{align*}
+        P\p{1} = p\p{1} = r\p{0} = R\p{1} = \mathcal{K}_1(r\p{0}, A)
+    \end{align*}
+
+    Se consideră $ P(k) $ adevărată și se demonstrează că $ P(k) \implies P(k + 1) $:
+
+    \bigskip 
+
+    1. $ R\p{k + 1} = \mathcal{K}_{k + 1}(r\p{0}, A) $
+
+    \medskip
+
+    Din relatia de recurenta $r\p{k} = r\p{k-1} - \alpha_k A p\p{k} $, $ r\p{k - 1} \in \mathcal{K}_k(r\p{0}, A) $, conform ipotezei de inductie. Cum si $ p\p{k} \in \mathcal{K}_k(r\p{0}, A) $, tot conform ipotezei de inductie, inseamna ca:
+    \begin{gather*}
+        p\p{k} = c_0 r\p{0} + c_1 (A r\p{0}) + c_2 (A^2 r\p{0}) + \dots + c_{k-1} (A^{k-1} r\p{0}) \implies \\
+        A p\p{k} = c_0 (A r\p{0}) + c_1 (A^2 r\p{0}) + c_2 (A^3 r\p{0}) + \dots + c_{k-1} (A^k r\p{0}) \implies \\
+        A p\p{k} \in \mathcal{K}_{k + 1}(r\p{0}, A).
+    \end{gather*}
+
+    In consecinta, $ r\p{k} \in \mathcal{K}_{k + 1}(r\p{0}, A) $. 
+
+    \medskip
+
+    Considerand ca algoritmul nu converge la iteratia $ k + 1 $, intrucat $ P_k^T r\p{k} = 0_k $, inseamna ca $ \text{dim}(R\p{k + 1}) = \text{dim}(P\p{k}) + 1 =  \text{dim}(\mathcal{K}_{k}(r\p{0}, A)) + 1 = \text{dim}(\mathcal{K}_{k + 1}(r\p{0}, A))$, conform ipotezei de inductie. 
+
+    \medskip
+
+    Conform incluziunii si dimensiunilor egale, $ R\p{k + 1} = \mathcal{K}_{k + 1}(r\p{0}, A) $.
+
+    \bigskip
+
+    2. $ P\p{k + 1} = \mathcal{K}_{k + 1}(r\p{0}, A) $
+
+    \medskip
+
+    Din relatia $ p\p{k + 1} = r\p{k} - A P_k z\p{k} $, $ r\p{k} \in \mathcal{K}_{k + 1}(r\p{0}, A) $, conform demonstratiei anterioare, iar din faptul ca $ A P_k z\p{k} $ reprezinta proiectia ortogonala a lui $ r\p{k} $ pe $\text{span}\{A p\p{1}, \dots, A p\p{k}\}$, inseamna ca $ A P_k z\p{k} \in A P\p{k} $. Dar, conform ipotezei de inductie, $ A P\p{k} = A \mathcal{K}_{k}(r\p{0}, A) \subset \mathcal{K}_{k + 1}(r\p{0}, A) $. In consecinta, $ p\p{k + 1} \in \mathcal{K}_{k + 1}(r\p{0}, A) $.
+
+    \medskip
+
+    Considerand ca algoritmul nu converge la iteratia $ k + 1 $, conform independentei liniare a directiilor $ p\p{k} \implies \text{dim}(P\p{k + 1}) = \text{dim}(P\p{k}) + 1 =  \text{dim}(\mathcal{K}_{k}(r\p{0}, A)) + 1 = \text{dim}(\mathcal{K}_{k + 1}(r\p{0}, A)) $.
+
+    \medskip
+
+    Conform incluziunii si dimensiunilor egale, $ P\p{k + 1} = \mathcal{K}_{k + 1}(r\p{0}, A). $
+
+    \bigskip
+
+    \noindent \textbf{iv)}
+
+    \medskip
+
+    Intrucat s-a demonstrat la \textbf{ii)} ca $r\p{k} \perp P\p{k}$, iar la \textbf{iii)} ca $ P\p{k} = R\p{k} $, rezulta ortogonalitatea tuturor reziduurilor intre ele.
+
+\end{demonstratie}

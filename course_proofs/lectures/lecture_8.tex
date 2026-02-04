@@ -1,0 +1,113 @@
+% lecture_8.tex
+
+\section*{Cursul VIII}
+
+\begin{exercitiu}{1}
+    Sa se reia analiza aproximarii cu diferente finite centrale a lui $ J_F(x\p{k})$ cu $ J_{\tilde{h}}\p{k}$ referitoare la:
+    \begin{itemize}
+        \item[-] corectitudinea aproximarii $J_{\tilde{h}}\p{k}$, 
+        \item[-] normalizarea lui $J_{\tilde{h}}\p{k}$,
+        \item[-] analiza erorii de aproximare.
+    \end{itemize}
+\end{exercitiu}
+
+\begin{demonstratie}
+
+    \noindent- corectitudinea
+    \begin{align*}
+        J_F(x\p{k}) w &= J_F(x\p{k}) \left( \sum_{j=1}^n w_j e\p{j} \right) \\
+        &= \sum_{j=1}^n w_j \left[ J_F(x\p{k}) e\p{j} \right] \\
+        &= \sum_{j=1}^n w_j \frac{\partial F}{\partial x_j}(x\p{k}) \\
+        &\simeq \sum_{j=1}^n w_j \frac{1}{2\tilde{h}_j\p{k}} \left[ F(x\p{k} + \tilde{h}_j\p{k} e\p{j}) - F(x\p{k} - \tilde{h}_j\p{k} e\p{j}) \right] \\
+        &= \sum_{j=1}^n w_j \left[ \tilde{J}_{\tilde{h}}\p{k} e\p{j} \right] \\
+        &= \tilde{J}_{\tilde{h}}\p{k} \left( \sum_{j=1}^n w_j e\p{j} \right) \\
+        &= J_{\tilde{h}}\p{k} w
+    \end{align*}
+
+    In consecinta, $ J_F(x\p{k}) w \simeq J_{\tilde{h}}\p{k} w, \quad \forall w \in \R^n$.
+
+    \bigskip
+
+    \noindent- normalizarea
+    $$
+    \frac{\partial F}{\partial x_j}(x\p{k}) \simeq
+    \begin{cases}
+        \displaystyle \frac{1}{2\tilde{h}_j\p{k} \|x\p{k}\|} \left[ F(x\p{k} + \tilde{h}_j\p{k} e\p{j}) - F(x\p{k} - \tilde{h}_j\p{k} e\p{j}) \right], & \text{dacă } x\p{k} \neq 0 \\[15pt]
+        \displaystyle \frac{1}{2\tilde{h}_j\p{k}} \left[ F(x\p{k} + \tilde{h}_j\p{k} e\p{j}) - F(x\p{k} - \tilde{h}_j\p{k} e\p{j}) \right], & \text{dacă } x\p{k} = 0
+    \end{cases}
+    $$
+
+    \newpage
+
+    \noindent- analiza erorii
+
+    \begin{align*}
+        (\tilde{J}_{\tilde{h}}\p{k})_{\cdot, j} &= \frac{\tilde{F}(x\p{k} + \tilde{h}_j\p{k} \|x\p{k}\| e\p{j}) - \tilde{F}(x\p{k} - \tilde{h}_j\p{k} \|x\p{k}\| e\p{j})}{2\tilde{h}_j\p{k} \|x\p{k}\|} \\
+        &= \frac{F(x\p{k} + \tilde{h}_j\p{k} \|x\p{k}\| e\p{j}) - F(x\p{k} - \tilde{h}_j\p{k} \|x\p{k}\| e\p{j})}{2\tilde{h}_j\p{k} \|x\p{k}\|} \\
+        &\quad + \frac{\mathcal{E}(x\p{k} + \tilde{h}_j\p{k} \|x\p{k}\| e\p{j}) - \mathcal{E}(x\p{k} - \tilde{h}_j\p{k} \|x\p{k}\| e\p{j})}{2\tilde{h}_j\p{k} \|x\p{k}\|}
+    \end{align*}
+
+    Eroarea totala a aproximarii este:
+
+    \begin{align*}
+        \| J_F(x\p{k})e\p{j} - (\tilde{J}_{\tilde{h}}\p{k})_{\cdot, j} \| &\leq \left\| \frac{\partial F}{\partial x_j}(x\p{k}) - \frac{F(x\p{k} + \dots) - F(x\p{k} - \dots)}{2\tilde{h}_j\p{k} \|x\p{k}\|} \right\| \\
+        &\quad + \left\| \frac{\mathcal{E}(x\p{k} + \dots) - \mathcal{E}(x\p{k} - \dots)}{2\tilde{h}_j\p{k} \|x\p{k}\|} \right\| \\
+        &= O\left( (\tilde{h}_j\p{k})^2 \|x\p{k}\|^2 \right) + O\left( \frac{\epsilon_M}{\tilde{h}_j\p{k} \|x\p{k}\|} \right).
+    \end{align*} 
+
+\end{demonstratie}
+
+\begin{lema}{Sherman-Morrison}
+    Fie $A \in \M_n(\R)$ inversabila si $u, v \in \R^n$. Atunci:
+
+\begin{itemize}
+    \item[(i)] $A + u v^T \in \M_n(\R)$ inversabila $\iff 1 + v^T A^{-1} u \neq 0$,
+    \item[(ii)] $1 + v^T A^{-1} u \neq 0 \implies$
+    $$ (A + u v^T)^{-1} = A^{-1} - \frac{A^{-1} u v^T A^{-1}}{1 + v^T A^{-1} u}. $$
+\end{itemize}
+\end{lema}
+
+\begin{demonstratie}
+
+    \noindent i)
+
+    Se considera $ w \in \R^{n}$ a.i. $ w = A^{-1} u$. Atunci:
+
+    $$
+    A + u v^{T} = A (I_n + A^{-1} u v^{T}) = A(I_n + w v^{T}).
+    $$
+
+    Intrucat produsul dintre doua matrici inversabile este o matrice inversabila, demonstratia se reduce la inversabilitatea matricii $ B = I_n + w v^{T}$. Pentru $ x \in \R^{n}$ avem:
+    $$
+    B x = (I_n + w v^{T}) x = x + w v^{T} x.
+    $$
+
+    Cazul $ x = w $:
+    $$
+    B w = w + w v^{T} w = w(1 + v^{T} w),
+    $$
+    ceea ce inseamna ca $ w $ este vectorul propriu al matricii $ B $ cu valoarea proprie asociata $\lambda_w = (1 + v^{T} w)$.
+
+    Cazul $ x = z : v^{T} z = 0 $:
+    $$
+    B z = z + w v^{T} z = z,
+    $$
+    ceea ce inseamna ca pe directiile ortogonale lui $ v $, directia e invarianta la transformarea $ B \implies \lambda_i = 1 $, $ \forall i \in \{1, \dots, n - 1\}$.
+
+    In consecinta, ca toate valorile proprii ale matricii B sa fie nenule, trebuie ca $ \lambda_w = (1 + v^{T} w) \neq 0 $. Prin urmare, inversabilitatea matricii $ B $, si implicit, a matricii $ A $ depinde de conditia ca $1 + v^T A^{-1} u \neq 0$. 
+
+    \bigskip
+
+    \noindent ii)
+
+    Pentru $ X , Y \in \M_n(\R) $, daca $ X Y = I_n \implies Y = X^{-1} $. Atunci: 
+    \begin{align*}
+        (A + uv^T) & \left( A^{-1} - \frac{A^{-1}uv^TA^{-1}}{1 + v^TA^{-1}u} \right) \\
+        &= AA^{-1} - A \frac{A^{-1}uv^TA^{-1}}{1 + v^TA^{-1}u} + uv^TA^{-1} - uv^T \frac{A^{-1}uv^TA^{-1}}{1 + v^TA^{-1}u} \\
+        &= I_n - \frac{uv^TA^{-1}}{1 + v^TA^{-1}u} + uv^TA^{-1} - \frac{u(v^TA^{-1}u)v^TA^{-1}}{1 + v^TA^{-1}u} \\
+        &= I_n + uv^TA^{-1} - \frac{uv^TA^{-1} + u(v^TA^{-1}u)v^TA^{-1}}{1 + v^TA^{-1}u} \\
+        &= I_n + uv^TA^{-1} - \frac{u \left( 1 + v^TA^{-1}u \right) v^TA^{-1}}{1 + v^TA^{-1}u} \\
+        &= I_n + uv^TA^{-1} - uv^TA^{-1} \\
+        &= I_n
+    \end{align*}
+\end{demonstratie}

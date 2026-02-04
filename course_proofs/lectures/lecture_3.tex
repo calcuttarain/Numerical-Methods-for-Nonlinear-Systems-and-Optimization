@@ -1,0 +1,125 @@
+% lecture_3.tex
+
+\section*{Cursul III}
+
+\begin{lema}{I}
+    \text{ }\\[0.5em]
+    Fie $P \in \M_n(\R)$ o matrice \textbf{SPD}. Atunci:
+    \begin{itemize}
+        \item[(i)] Dacă $A \in \M_n(\R)$ este \textbf{simetrică}, atunci $P^{-1}A$ este simetrică în raport cu $(\cdot,\cdot)_P$.
+        \item[(ii)] Dacă $A \in \M_n(\R)$ este \textbf{PD}, atunci $P^{-1}A$ este PD în raport cu $(\cdot,\cdot)_P$.
+        \item[(iii)] Dacă $A \in \M_n(\R)$ este \textbf{simetrică}, atunci
+        $$
+        \|P^{-1}A\|_P = \rho(P^{-1}A)
+        $$
+    \end{itemize}
+\end{lema}
+
+\begin{demonstratie}
+
+    \bigskip
+
+    \noindent \textbf{(i)} $P^{-1}A$ este simetrică în raport cu $(\cdot, \cdot)_P \iff$
+    \begin{gather*}
+        (P^{-1}A v, u)_P = (v, P^{-1}A u)_P, \quad (\forall) u, v \in \R^n \\
+        \Rightarrow v^T A^T (P^{-1})^T P u = v^T P^T P^{-1} A u \quad (A=A^T, P=P^T) \\
+        \Rightarrow v^T A P^{-1} P u = v^T P P^{-1} A u \Rightarrow v^T A u = v^T A u \quad (A) \\
+    \end{gather*}
+
+    \noindent \textbf{(ii)} $P^{-1}A$ este PD în raport cu $(\cdot, \cdot)_P \iff$
+    \begin{gather*}
+        (P^{-1}A v, v)_P > 0, \quad (\forall) v \in \R^n, v \neq 0 
+        \Rightarrow v^T A^T (P^{-1})^T P v > 0 \Rightarrow v^T A^T v > 0 \quad (P=P^T)
+        \Rightarrow \langle A v, v \rangle_2 > 0 \quad (\text{Adevărat, pt. } A\text{--PD}). 
+    \end{gather*}
+
+    \vspace{1em}
+    \noindent \textbf{(iii)} Pentru demonstrarea acestui punct, se vor folosi rezultatele de la lemele 1 și 2.
+
+    \bigskip
+
+    \begin{lema}{1} 
+        Fie $P$ o matrice SPD. Atunci $\| A \|_P = \| P^{1/2} A P^{-1/2} \|_2$.
+    \end{lema}
+
+    \begin{demonstratie}
+        \begin{align*}
+            \| A \|_P &= \max_v \frac{\| A v \|_P}{\| v \|_P} = \max_v \frac{\sqrt{(Av)^T P (Av)}}{\sqrt{v^T P v}} \quad (*) \\
+            \text{Considerăm } y &= P^{1/2}v, \quad v = P^{-1/2}y \\
+            (*) &= \max_y \frac{\sqrt{(A P^{-1/2} y)^T P (A P^{-1/2} y)}}{\sqrt{(P^{-1/2} y)^T P P^{-1/2} y}} 
+        \end{align*}
+        \begin{enumerate}
+            \item $(A P^{-1/2} y)^T P A P^{-1/2} y = y^T P^{-1/2} A^T P A P^{-1/2} y = y^T P^{-1/2} A^T P^{1/2} P^{1/2} A P^{-1/2} y$ \\
+            $= (P^{1/2} A P^{-1/2} y)^T (P^{1/2} A P^{-1/2} y) = \| P^{1/2} A P^{-1/2} y \|_2^2$
+            \item $(P^{-1/2} y)^T P P^{-1/2} y = y^T P^{-1/2} P P^{-1/2} y = y^T y = \| y \|_2^2$
+        \end{enumerate}
+        Rezultă: $\| A \|_P = \max_y \frac{\| P^{1/2} A P^{-1/2} y \|_2}{\| y \|_2} = \| P^{1/2} A P^{-1/2} \|_2. $
+    \end{demonstratie}
+
+    \bigskip
+
+    \begin{lema}{2}
+        Fie $A$ și $B \in \R^{n \times n}$. Dacă există $P \in \R^{n \times n}$ nesingulară a.î. $B = P^{-1}AP$, atunci $A$ și $B$ au același set de valori proprii (și se numesc similare).
+    \end{lema}
+
+    \begin{demonstratie}
+        \begin{align*}
+            P_B(\lambda) &= \det(B - \lambda I_n) = \det(P^{-1}AP - \lambda I_n) = \\
+            &= \det(P^{-1}AP - \lambda P^{-1}P) = \\
+            &= \det(P^{-1}(A - \lambda I_n)P) = \\
+            &= \det(P^{-1}) \cdot \det(A - \lambda I_n) \cdot \det(P) = \\
+            &= \frac{1}{\det(P)} \cdot \det(A - \lambda I_n) \cdot \det(P) = \\
+            &= \det(A - \lambda I_n) = P_A(\lambda). 
+        \end{align*}
+    \end{demonstratie}
+
+    \bigskip
+
+    \textbf{Revenind la demonstrația (iii):}
+    $$
+    \| P^{-1} A \|_P = \| P^{1/2} (P^{-1} A) P^{-1/2} \|_2 = \| P^{-1/2} A P^{-1/2} \|_2 \quad (\text{cf. \textbf{Lema 1}})
+    $$
+    Matricea $P^{-1/2} A P^{-1/2}$ este simetrică $\Rightarrow$ norma sa euclidiană este egală cu raza spectrală:
+    $$
+    \| P^{-1/2} A P^{-1/2} \|_2 = \rho(P^{-1/2} A P^{-1/2})
+    $$
+    Conform \textbf{Lemei 2}, matricile $P^{-1/2} A P^{-1/2}$ și $P^{-1} A$ sunt similare deoarece:
+    $$
+    P^{-1/2} A P^{-1/2} = P^{1/2} (P^{-1} A) P^{-1/2}
+    $$
+    Deci au aceleași valori proprii, ceea ce implică:
+    $$
+    \rho(P^{-1/2} A P^{-1/2}) = \rho(P^{-1} A) 
+    $$
+
+\end{demonstratie}
+
+\begin{teorema}{II. Convergența PR-SD}
+    \text{ }\\[0.5em]
+    Fie $A \in \M_n(\R)$ \textbf{SPD}. Considerăm șirul $\{x\p{k}\} \subset \R^n$, $k \ge 0$, dat de algoritmul PR-SD (preconditioned steepest descent) și $\{\omega_k\}$ dată conform (7).
+    $$
+    \Rightarrow \quad \lim_{k \to \infty} x\p{k} = x^\ast \quad\text{(metoda PR-SD converge)}
+    $$
+\end{teorema}
+
+\begin{demonstratie}
+    \begin{align*}
+        \| e\p{k} \|_A^2 &= \| e\p{k-1} - \omega_{k-1} z\p{k-1} \|_A^2 = \\[0.5em]
+        &= \| e\p{k-1} \|_A^2 - 2 \omega_{k-1} (e\p{k-1}, z\p{k-1})_A + \omega_{k-1}^2 \| z\p{k-1} \|_A^2 = \\[0.5em]
+        &= \| e\p{k-1} \|_A^2 - 2 \frac{(e\p{k-1}, z\p{k-1})_A}{\| z\p{k-1} \|_A^2} (e\p{k-1}, z\p{k-1})_A + \frac{(e\p{k-1}, z\p{k-1})_A^2}{\| z\p{k-1} \|_A^4} \| z\p{k-1} \|_A^2 = \\[0.5em]
+        &= \| e\p{k-1} \|_A^2 - \frac{(e\p{k-1}, z\p{k-1})_A^2}{\| z\p{k-1} \|_A^2} \tag{1}
+    \end{align*}
+
+    \[
+    A \rightarrow \text{SPD} \Rightarrow \| z\p{k-1} \|_A^2 = 0 \iff z\p{k-1} = 0 \tag{2}
+    \]
+
+    \begin{align*}
+        (e\p{k-1}, z\p{k-1})_A &= (A^{-1} r\p{k-1}, z\p{k-1})_A = \langle r\p{k-1}, z\p{k-1} \rangle_2 = \\
+        &= \langle P z\p{k-1}, z\p{k-1} \rangle_2 = \| z\p{k-1} \|^2_{P} \tag{3}
+    \end{align*}
+
+    \bigskip
+
+    Conform (1), (2), (3) eroarea are o descreștere \textbf{strict} monotonă cât timp $x\p{k} \neq x^\ast \Rightarrow$ \textbf{PR-SD converge}. 
+\end{demonstratie}

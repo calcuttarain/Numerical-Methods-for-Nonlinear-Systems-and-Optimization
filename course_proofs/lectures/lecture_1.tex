@@ -1,0 +1,87 @@
+% lecture_1.tex
+
+\section*{Cursul I}
+
+\begin{teorema}{3}
+    \text{ }\\[0.5em]
+    Dacă metoda \textbf{Jacobi} converge și $0 < \omega \le 1$, atunci \textbf{metoda JOR converge.}
+\end{teorema}
+
+\begin{demonstratie}
+    \begin{align*}
+        M_J &= I_n - D^{-1}A. \\[0.8em]
+        M_{JOR} &= I_n - \omega D^{-1}A \\[0.5em]
+        &= I_n - \omega D^{-1}A - \omega I_n + \omega I_n \\[0.5em]
+        &= I_n - \omega I_n + \omega I_n - \omega D^{-1}A \\[0.5em]
+        &= (1 - \omega) I_n + \omega (I_n - D^{-1}A) \\[0.5em]
+        &= (1 - \omega) I_n + \omega M_J.
+    \end{align*}
+
+    Fie \(\lambda \in \sigma(M_J)\). Atunci:
+    \begin{align*}
+        M_{JOR} v &= [(1 - \omega)I_n + \omega M_J] v \\[0.5em]
+        &= (1 - \omega) I_n v + \omega M_J v \\[0.5em]
+        &= (1 - \omega) v + \omega \lambda v \\[0.5em]
+        &= (1 - \omega + \omega \lambda) v.
+    \end{align*}
+
+    Rezultă:
+    $$
+    (1 - \omega + \omega \lambda) \in \sigma(M_{JOR}) \quad \Rightarrow \quad \rho(M_{JOR}) = \max |1 - \omega + \omega \lambda|.
+    $$
+
+    Cum:
+    $$
+    |1 - \omega + \omega \lambda| \le (1 - \omega) + \omega |\lambda| \le (1 - \omega) + \omega \rho(M_J) \le (1 - \omega) + \omega \cdot 1 = 1 - \omega + \omega = 1,
+    $$
+
+    rezultă că:
+    $$
+    \boxed{\text{Metoda JOR converge.}}
+    $$
+\end{demonstratie}
+
+\begin{teorema}{4}
+    \text{ }\\[0.5em]
+    Fie $A \in \M_n(\R)$ o matrice \textbf{simetrică pozitiv definită (SPD)}. Dacă $0 < \omega < \dfrac{2}{\rho(D^{-1}A)}$, atunci \textbf{metoda JOR converge.}
+\end{teorema}
+
+\begin{demonstratie}
+    $$
+    M_{JOR} = I_n - \omega D^{-1}A.
+    $$
+    Deoarece $A$ este SPD $\Rightarrow D^{-1}A$ este PD.\\[0.5em]
+
+    \noindent Fie \(\lambda \in \sigma(D^{-1}A)\). Atunci:
+    \begin{align*}
+        M_{JOR}v &= (I_n - \omega D^{-1}A)v \\[0.5em]
+        &= I_n v - \omega D^{-1}A v \\[0.5em]
+        &= v - \omega \lambda v \\[0.5em]
+        &= (1 - \omega \lambda)v.
+    \end{align*}
+
+    Rezultă:
+    $$
+    (1 - \omega \lambda) \in \sigma(M_{JOR}) \quad \Rightarrow \quad \rho(M_{JOR}) = \max |1 - \omega \lambda|.\\[0.5em]
+    $$
+
+    Notăm cu \(\lambda_{\max} = \rho(D^{-1}A)\). \\[0.5em]
+
+    Conform cerinței:
+    $$
+    0 < \omega < \frac{2}{\lambda_{\max}}
+    $$
+
+    \begin{align*}
+        &\Rightarrow 0 < \omega \lambda_{\max} < 2 \\[0.5em]
+        &\Rightarrow -1 < \omega \lambda_{\max} - 1 < 1 \\[0.5em]
+        &\Rightarrow -1 < 1 - \omega \lambda_{\max} < 1 \\[0.5em]
+        &\Rightarrow |1 - \omega \lambda_{\max}| < 1 \\[0.5em]
+        &\Rightarrow \rho(M_{JOR}) < 1 
+    \end{align*}
+
+    rezultă că:
+    $$
+    \boxed{\text{Metoda JOR converge.}}
+    $$
+\end{demonstratie}

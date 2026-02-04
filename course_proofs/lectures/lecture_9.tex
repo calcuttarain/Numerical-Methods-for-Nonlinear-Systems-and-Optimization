@@ -1,0 +1,161 @@
+% lecture_9.tex
+
+\section*{Cursul IX}
+
+\begin{exercitiu}{1}
+    Fie norma Frobenius $\|\cdot\|_F : \M_n(\R) \to [0, \infty)$ definita prin:
+    $$ \|A\|_F^2 := \sum_{i=1}^n \|A v\p{i}\|_2^2, \quad \forall \{v\p{1}, \dots, v\p{n}\} \subset \R^n \text{ sistem ortonormat.} $$
+    Sa se arate ca:
+    $$ \|A\|_F^2 = \text{tr}(A^T A) = \sum_{i,j=1}^n a_{ij}^2 $$.
+\end{exercitiu}
+
+\begin{demonstratie}
+
+    Se considera sistemul ortonormat dat de baza canonica $v\p{j} = e\p{j}$. Vectorul $A e\p{j}$ reprezinta coloana $j$ a matricei $A$. Atunci:
+    $$
+    \|A\|_F^2 = \sum_{j=1}^n \|A e\p{j}\|_2^2 = \sum_{j=1}^n \left( \sum_{i=1}^n a_{ij}^2 \right) = \sum_{i,j=1}^n a_{ij}^2.
+    $$
+
+    Fie $ (A^T A)_{jj} $ diagonala principala a matricii $ A^T A $. Atunci:
+
+
+    \begin{align*}
+    (A^T A)_{jj} &= \sum_{k=1}^n (A^T)_{jk} A_{kj} = \sum_{k=1}^n a_{kj} a_{kj} = \sum_{k=1}^n a_{kj}^2 \\
+    \text{tr}(A^T A) &= \sum_{j=1}^n (A^T A)_{jj} = \sum_{j=1}^n \sum_{k=1}^n a_{kj}^2 = \sum_{i,j=1}^n a_{ij}^2.
+    \end{align*}
+
+    In consecinta,
+    $$ \|A\|_F^2 = \sum_{i,j=1}^n a_{ij}^2 = \text{tr}(A^T A) $$
+
+\end{demonstratie}
+
+\begin{exercitiu}{2} Sa se demonstreze proprietatile:
+\begin{enumerate}
+    \item $\|AB\|_F \leq \min \{ \|A\|_2 \|B\|_F, \|A\|_F \|B\|_2 \}, \quad \forall A, B \in \M_n(\R)$
+    \item $\|x y^T\|_F = \|x y^T\|_2 = \|x\|_2 \|y\|_2, \quad \forall x, y \in \R^n$
+    \item $\|AB\| \leq \|A\| \|B\|, \quad \forall A, B \in \M_n(\R)$ pentru $\|\cdot\| = \|\cdot\|_2$ și $\|\cdot\| = \|\cdot\|_F$.
+\end{enumerate}
+\end{exercitiu}
+
+\newpage
+
+\begin{demonstratie}
+
+    \noindent 1. 
+    
+    Fie $b\p{j}$ coloana $j$ a matricei $B$. Atunci coloana $j$ a matricei $AB$ este $A b\p{j}$.
+    \begin{align*}
+    \|AB\|_F^2 &= \sum_{j=1}^n \|A b\p{j}\|_2^2 \\
+    &\leq \sum_{j=1}^n (\|A\|_2 \|b\p{j}\|_2)^2 \\
+    &= \|A\|_2^2 \sum_{j=1}^n \|b\p{j}\|_2^2 \\
+    &= \|A\|_2^2 \|B\|_F^2 \implies \|AB\|_F \leq \|A\|_2 \|B\|_F.
+    \end{align*}
+
+    Pentru a doua inegalitate se tine cont de proprietatea de invarianta la operatia de transpunere a normelor matriceale:
+    $$ \|AB\|_F = \|(AB)^T\|_F = \|B^T A^T\|_F \leq \|B^T\|_2 \|A^T\|_F = \|B\|_2 \|A\|_F. $$
+
+    In consecinta,
+    $$ \|AB\|_F \leq \min \{ \|A\|_2 \|B\|_F, \|A\|_F \|B\|_2 \}. $$
+
+    \noindent 2.  
+    \begin{align*}
+    \|xy^T\|_F^2 &= \text{tr}((xy^T)^T (xy^T)) = \text{tr}(y x^T x y^T) \\
+    &= \text{tr}(y (x^T x) y^T) = (x^T x) \text{tr}(yy^T) \\
+    &= \|x\|_2^2 \|y\|_2^2 \implies \|xy^T\|_F = \|x\|_2 \|y\|_2
+    \end{align*}
+
+    Folosind definitia normei matriceale si inegalitatea Cauchy-Schwarz pentru $ |y^T z| \leq \|y\|_2 \|z\|_2$:
+    \begin{align*}
+    \|xy^T\|_2 &= \sup_{z \neq 0} \frac{\|x y^T z\|_2}{\|z\|_2} = \sup_{z \neq 0} \frac{\|x (y^T z)\|_2}{\|z\|_2} \\
+    &= \|x\|_2 \sup_{z \neq 0} \frac{|y^T z|}{\|z\|_2} = \|x\|_2 \|y\|_2.
+    \end{align*}
+
+    \noindent 3.
+
+    Pentru $\|\cdot\|_2$:
+    \begin{align*}
+    \|AB\|_2 &= \sup_{\|u\|_2=1} \|ABu\|_2 \leq \sup_{\|u\|_2=1} (\|A\|_2 \|Bu\|_2) \\
+    &\leq \|A\|_2 \left( \sup_{\|u\|_2=1} \|Bu\|_2 \right) = \|A\|_2 \|B\|_2
+    \end{align*}
+
+    Pentru $\|\cdot\|_F$:
+
+    Intrucat $\|X\|_2^2 = \lambda_{\max}(X^TX) \leq \text{tr}(X^TX) = \|X\|_F^2 \implies \|X\|_2 \leq \|X\|_F$. Atunci:
+
+    $$ \|AB\|_F \leq \|A\|_2 \|B\|_2 \leq \|A\|_F \|B\|_F. $$
+
+\end{demonstratie}
+
+\begin{exercitiu}{3}
+
+    Fie $A = \begin{bmatrix} 4 & 1 \\ -1 & 1 \end{bmatrix}$, $h = \begin{bmatrix} 1 \\ 0 \end{bmatrix}$, $y = \begin{bmatrix} 5 \\ -2 \end{bmatrix}$.
+
+\begin{enumerate}
+    \item Pentru $\|\cdot\| = |||\cdot||| = \|\cdot\|_2$ in Lema 1, sa se arate ca solutia problemei de minimizare
+    $$ B^* = \arg \min_{\{B \in \M_n(\R) \mid Bh=y\}} \|B-A\| $$
+    este data de
+    $$ B^* = A + \begin{bmatrix} 1 & \alpha \\ -1 & \alpha \end{bmatrix}, \quad \alpha \in [-1, 1]. $$
+
+    \item Pentru $\|\cdot\| = \|\cdot\|_F$ si $|||\cdot||| = \|\cdot\|_2$ in Lema 1, sa se determine unica solutie a problemei de minimizare
+    $$ B^* = \arg \min_{\{B \in \M_n(\R) \mid Bh=y\}} \|B-A\|_F. $$
+\end{enumerate}
+\end{exercitiu}
+
+\begin{demonstratie}
+
+    \noindent 1.
+
+    Fie eroarea $z = y - Ah$:
+    $$ z = \begin{bmatrix} 5 \\ -2 \end{bmatrix} - \begin{bmatrix} 4 & 1 \\ -1 & 1 \end{bmatrix} \begin{bmatrix} 1 \\ 0 \end{bmatrix} = \begin{bmatrix} 1 \\ -1 \end{bmatrix}. $$
+
+    Fie $E = B-A$. Atunci $Bh=y \iff (B-A)h = z$. Intrucat, in cazul general,
+    $$ \|Eh\|_2 \le \|E\|_2 \|h\|_2 \implies \|E\|_2 \ge \frac{\|Eh\|_2}{\|h\|_2}, $$
+    in cazul acesta:
+    $$ \|E\|_2 \ge \frac{\|z\|_2}{\|h\|_2} = \frac{\sqrt{1^2 + (-1)^2}}{\sqrt{1^2 + 0^2}} = \frac{\sqrt{2}}{1} = \sqrt{2}. $$
+
+    Se considera candidatul
+    $$ E = \begin{bmatrix} 1 & \alpha \\ -1 & \alpha \end{bmatrix}, $$
+    pentru care:
+    $$ \|E\|_2 = \sqrt{\lambda_{\max}(E^T E)} = \sqrt{\max\{2, 2\alpha^2\}}. $$
+
+    Atingand limita inferioara calculata, 
+    \begin{align*}
+    \|E\|_2 = \sqrt{2} &\iff \sqrt{\max\{2, 2\alpha^2\}} = \sqrt{2} \\
+    &\iff \max\{2, 2\alpha^2\} = 2 \\
+    &\iff 2\alpha^2 \le 2 \iff \alpha^2 \le 1. 
+    \end{align*}
+
+    \noindent 2.
+
+    Folosind Proprietatea 1. demonstrata anterior, 
+    \begin{align*}
+    \|AB\|_F &\le \min \{ \|A\|_2 \|B\|_F, \|A\|_F \|B\|_2 \} \\
+    \|AB\|_F &\le \|A\|_F \|B\|_2.
+    \end{align*}
+
+    Fie scalarul $k = \frac{1}{v^T v} = \frac{1}{\|v\|_2^2}$. Conform omogenitatii normei:
+    $$ \left\| \frac{vv^T}{v^T v} \right\|_F = \frac{1}{v^T v} \|v v^T\|_F. $$
+
+    Folosind Proprietatea 2. demonstrata anterior, 
+    $$ \|v v^T\|_F = \|v\|_2 \|v\|_2 = \|v\|_2^2, $$
+
+    Deci:
+    $$ \left\| \frac{vv^T}{v^T v} \right\|_F = \frac{1}{\|v\|_2^2} \cdot \|v\|_2^2 = 1 $$
+
+    In consecinta, normele sunt conforme cu ipoteza Lemei 1.
+
+    \bigskip
+
+    Conform Lemei 1, pentru norma Frobenius, 
+    $$ B^* = A + \frac{(y - Ah)h^T}{h^T h}. $$
+
+    Atunci:
+    $$ Ah = \begin{bmatrix} 4 & 1 \\ -1 & 1 \end{bmatrix} \begin{bmatrix} 1 \\ 0 \end{bmatrix} = \begin{bmatrix} 4 \\ -1 \end{bmatrix}, $$
+    $$ y - Ah = \begin{bmatrix} 5 \\ -2 \end{bmatrix} - \begin{bmatrix} 4 \\ -1 \end{bmatrix} = \begin{bmatrix} 1 \\ -1 \end{bmatrix}, $$
+    $$ h^T h = \|h\|_2^2 = 1^2 + 0^2 = 1, $$
+    $$ \frac{(y - Ah)h^T}{h^T h} = \frac{1}{1} \begin{bmatrix} 1 \\ -1 \end{bmatrix} \begin{bmatrix} 1 & 0 \end{bmatrix} = \begin{bmatrix} 1 & 0 \\ -1 & 0 \end{bmatrix}. $$
+
+    In consecinta,
+    $$ B^* = \begin{bmatrix} 4 & 1 \\ -1 & 1 \end{bmatrix} + \begin{bmatrix} 1 & 0 \\ -1 & 0 \end{bmatrix} = \begin{bmatrix} 5 & 1 \\ -2 & 1 \end{bmatrix}. $$
+
+\end{demonstratie}

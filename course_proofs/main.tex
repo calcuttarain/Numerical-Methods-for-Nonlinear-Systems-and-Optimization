@@ -1,0 +1,30 @@
+% main.tex
+\input{preamble}
+
+\begin{document}
+
+% metadata
+\title{\textbf{Demonstrații Cursuri}}
+\course{Metode Numerice pentru Sisteme Neliniare și Optimizare}
+\professor{Prof. dr. Liviu Marin}
+\student{Masterand: Pistol Tudor}
+\group{Grupa 403}
+\date{Ianuarie 2026}
+
+\maketitle
+
+% add a new lecture section from the lectures folder on a new page
+\newcommand{\addLecture}[1]{\newpage \input{lectures/#1}}
+
+% the first lecture is added without \newpage
+\input{lectures/lecture_1}
+\addLecture{lecture_2}
+\addLecture{lecture_3}
+\addLecture{lecture_4}
+\addLecture{lecture_5}
+\addLecture{lecture_6}
+\addLecture{lecture_7}
+\addLecture{lecture_8}
+\addLecture{lecture_9}
+
+\end{document}

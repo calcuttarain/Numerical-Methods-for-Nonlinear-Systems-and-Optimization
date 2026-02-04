@@ -1,0 +1,89 @@
+% lecture_7.tex
+
+\section*{Cursul VII}
+
+\begin{corolar}{Lema Banach}
+    $$ \forall F \in \M_n(\R) : \|F\| < 1, $$
+    $$ \|(I_n - F)^{-1} - I_n\| \leq \frac{\|F\|}{1 - \|F\|} $$
+\end{corolar}
+
+\begin{demonstratie}
+    \begin{align*}
+        (I_n - F)^{-1} &= \sum_{k=0}^{\infty} F^k  \\
+        (I_n - F)^{-1} - I_n &= \sum_{k=1}^{\infty} F^k\\
+        &= F \sum_{k=0}^{\infty} F^k \\
+        &= F (I_n - F)^{-1}.
+    \end{align*}
+
+    Atunci:
+    \begin{align*}
+        \|(I_n - F)^{-1} - I_n\| &= \| F (I_n - F)^{-1} \| \\
+        &\leq \| F \| \| (I_n - F)^{-1} \| \\
+        &\leq \| F \| \frac{1}{1 - \|F\|} \\
+        &= \frac{\|F\|}{1 - \|F\|}.
+    \end{align*}
+\end{demonstratie}
+
+\begin{teorema}{1}
+
+Daca $A \in \M_n(\R)$ este inversabila si $E \in \M_n(\R)$ a.i. $r := \|A^{-1}E\| < 1$, atunci
+\begin{enumerate}
+    \item[(i)] $A+E \in \M_n(\R)$ este inversabila
+    \item[(ii)] $ \| (A+E)^{-1} - A^{-1} \| \leq \frac{\|E\| \cdot \|A^{-1}\|^2}{1-r} $
+\end{enumerate}
+\end{teorema}
+
+\begin{demonstratie}
+
+    \textbf{i)} P.p. ca $ A + E \rightarrow $ singulara. Deci $ (\exists) x \in \R^{n} \neq 0 \quad a.i. \quad (A+E)x = 0 $.
+    \begin{align*}
+        Ax + Ex &= 0 \\
+        Ax &= -Ex \\
+        x &= -A^{-1}Ex \\
+        \|x\| &= \|-A^{-1}Ex\| \\
+        \|x\| &\leq \|A^{-1}E\| \|x\| \\ 
+        1 &\leq \|A^{-1}E\|, 
+    \end{align*}
+    ceea ce e o contradictie $ \implies A $ este nesingulara si inversabila.
+
+    \bigskip
+
+    \textbf{ii)}
+    $$ A + E = A(I_n + A^{-1}E) = A[I_n - (-A^{-1}E)] $$.
+
+    Considerand $F \in \M_n(\R)$, $F = -A^{-1}E$, rezulta ca:
+    \begin{align*}
+        \|(A+E)^{-1} - A^{-1}\| &= \| [A(I_n - F)]^{-1} - A^{-1} \| \\
+        &= \| (I_n - F)^{-1} \cdot A^{-1} - A^{-1} \| \\
+        &= \| A^{-1} [(I_n - F)^{-1} - I_n] \| \\
+        &\leq \| A^{-1} \| \| (I_n - F)^{-1} - I_n \|,
+    \end{align*}
+    care, conform corolarului Lemei Banach,
+    $$ \leq \|A^{-1}\| \cdot \frac{\|F\|}{1 - \|F\|}. $$
+
+    Inlocuind $F$ cu $-A^{-1}E$ si tinand cont de invarianta normei matriceale la schimbarea de semn,
+
+    \begin{align*}
+        \|(A+E)^{-1} - A^{-1}\| &\leq \|A^{-1}\| \cdot \frac{\|A^{-1}E\|}{1 - \|A^{-1}E\|} \\
+        &\leq \frac{\|E\| \|A^{-1}\|^2}{1 - r}.
+    \end{align*}
+
+\end{demonstratie}
+
+\begin{exercitiu}{I} 
+    Sa se determine $h\p{k}$ dat de metoda Newton-Jacobi cu $ m \in \N $ pasi, i.e., Jacobi($m$).
+\end{exercitiu}
+
+\begin{demonstratie}
+
+    Conform cursului, pentru metoda Newton-Richardson Stationara:
+    $$ h\p{k} := - \sum_{j=0}^{m-1} (M\p{k})^j \cdot (P\p{k})^{-1} \cdot F(x\p{k}) $$
+
+    In particular, pentru metoda Newton-Jacobi:
+    \begin{align*}
+        h\p{k} &:= - \sum_{j=0}^{m-1} (M_J\p{k})^j \cdot (P_J\p{k})^{-1} \cdot F(x\p{k}) \\
+        &= \sum_{j=0}^{m-1} \left[ (D\p{k})^{-1} (L\p{k} + U\p{k}) \right]^j \cdot (D\p{k})^{-1} \cdot F(x\p{k}),
+    \end{align*}
+    unde $ D $, $ U $ si $ L $ sunt partile aditive ale matricii $ J_F (x\p{k})$.
+
+\end{demonstratie}
